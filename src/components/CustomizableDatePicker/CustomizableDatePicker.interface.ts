@@ -4,7 +4,7 @@ type TOnlyPick = "start" | "end";
 
 export interface ICustomizableDatePickerProps {
   calendars: Calendar[];
-  value?: InputValue;
+  modelValue?: InputValue;
   monthCount?: number;
   currentCalendar?: number;
   range?: boolean;

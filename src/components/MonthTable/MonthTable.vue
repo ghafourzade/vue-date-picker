@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { BaseDayInfo, Day, IsCheck, RangeValue, SelectDayInfo } from "@/interfaces/Calendar";
-import WeekHeader from "@/components/WeekHeader";
+import { BaseDayInfo, Day, IsCheck, RangeValue, SelectDayInfo } from "@interfaces/Calendar";
+import WeekHeader from "@components/WeekHeader";
 import { IMonthTableProps } from "./MonthTable.interface";
 
 const props = defineProps<IMonthTableProps>();
@@ -42,10 +42,16 @@ const daysInMonthList = computed<Day[]>(() => {
     };
   });
 });
-const emptyDays = computed<number>(() => (props.calendar.firstDayInMonth(props.month, props.year) - props.calendar.startDayWeek + 7) % 7);
+const emptyDays = computed<number>(
+  () => (props.calendar.firstDayInMonth(props.month, props.year) - props.calendar.startDayWeek + 7) % 7
+);
 const hoveredDayDate = computed<Date | null>(() => {
   if (props.currentHoveredDay) {
-    return props.calendar.getDate(props.currentHoveredDay.year, props.currentHoveredDay.month, props.currentHoveredDay.dayInMonth);
+    return props.calendar.getDate(
+      props.currentHoveredDay.year,
+      props.currentHoveredDay.month,
+      props.currentHoveredDay.dayInMonth
+    );
   } else {
     return null;
   }
@@ -56,10 +62,16 @@ const isDisable = (day: number): boolean => {
   let beforeMin = false;
   let afterMax = false;
   if (props.min) {
-    beforeMin = props.calendar.isAfter(props.min as unknown as Date, props.calendar.getDate(props.year, props.month, day));
+    beforeMin = props.calendar.isAfter(
+      props.min as unknown as Date,
+      props.calendar.getDate(props.year, props.month, day)
+    );
   }
   if (props.max) {
-    afterMax = props.calendar.isAfter(props.calendar.getDate(props.year, props.month, day), props.max as unknown as Date);
+    afterMax = props.calendar.isAfter(
+      props.calendar.getDate(props.year, props.month, day),
+      props.max as unknown as Date
+    );
   }
   return beforeMin || afterMax;
 };
@@ -67,7 +79,11 @@ const isDayBetween = (day: number): boolean => {
   if (props.range) {
     if (props.selectedFirstRange && hoveredDayDate.value) {
       if (props.calendar.isAfter(hoveredDayDate.value, props.selectedFirstRange)) {
-        return props.calendar.isBetween(props.calendar.getDate(props.year, props.month, day), props.selectedFirstRange, hoveredDayDate.value);
+        return props.calendar.isBetween(
+          props.calendar.getDate(props.year, props.month, day),
+          props.selectedFirstRange,
+          hoveredDayDate.value
+        );
       } else {
         return false;
       }

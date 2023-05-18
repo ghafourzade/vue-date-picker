@@ -1,0 +1,99 @@
+@import "../../assets/colors.scss";
+
+$days-gap: 8px;
+$days-raduis: 8px;
+
+.date-picker::v-deep {
+  user-select: none;
+  padding: 8px;
+  box-shadow: 0 0 16px 0 rgba($color: $color-gray-900, $alpha: 0.4);
+  color: $color-gray-900;
+  border-radius: $days-raduis;
+  .main-header-container {
+    padding: 8px 0;
+    .arrow-button {
+      padding: 8px;
+      border: 1px solid $color-gray-500;
+      box-shadow: 1px 1px 2px 0 rgba($color: $color-gray-900, $alpha: 0.2);
+      border-radius: $days-raduis;
+      display: flex;
+    }
+  }
+  .month-title {
+    font-size: 18px;
+    padding: 8px 0;
+  }
+  .week-days-container {
+    color: $color-gray-600;
+  }
+  .day-wrapper,
+  .day-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .main-day-wrapper {
+    padding: $days-gap 0;
+  }
+  .day-wrapper {
+    padding: 0 $days-gap;
+    &.start-range,
+    &.start-week {
+      padding-left: 0;
+      margin-left: $days-gap;
+    }
+    &.end-range,
+    &.end-week {
+      padding-right: 0;
+      margin-right: $days-gap;
+    }
+    &.start-range {
+      border-top-left-radius: $days-raduis;
+      border-bottom-left-radius: $days-raduis;
+    }
+    &.end-range {
+      border-top-right-radius: $days-raduis;
+      border-bottom-right-radius: $days-raduis;
+    }
+    &:hover:not(.start-range, .end-range, .between) {
+      padding: 0;
+      margin: 0 $days-gap;
+    }
+  }
+  .day-container {
+    cursor: pointer;
+    aspect-ratio: 1/1;
+    width: 100%;
+    // border: 1px solid $color-gray-500;
+    border-radius: $days-raduis;
+    .day {
+      font-size: 20px;
+    }
+  }
+}
+
+.date-picker::v-deep {
+  $primary: $color-blue;
+  &.blue {
+    .day-wrapper.today:not(.between) {
+      .day-container {
+        background-color: $color-gray-300;
+      }
+    }
+    .day-wrapper.start-range,
+    .day-wrapper.end-range,
+    .day-wrapper.between {
+      background-color: rgba($color: $primary, $alpha: 0.4);
+    }
+    .day-wrapper.selected,
+    .day-wrapper.start-range,
+    .day-wrapper.end-range,
+    .day-wrapper:hover {
+      .day-container {
+        background-color: $primary;
+        color: $color-white;
+      }
+    }
+  }
+}

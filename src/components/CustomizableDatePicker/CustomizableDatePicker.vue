@@ -3,17 +3,28 @@ import { computed, ref, watch } from "vue";
 import { Day, InputValue, Page, RangeValue } from "@/interfaces/Calendar";
 import MainHeader from "@/components/MainHeader";
 import MonthTable from "@/components/MonthTable";
-import { ICustomizableDatePickerProps } from "./CustomizableDatePicker.interface";
+import { ICustomizableDatePickerEmits, ICustomizableDatePickerProps } from "./CustomizableDatePicker.interface";
 
 const props = defineProps<ICustomizableDatePickerProps>();
-const emit = defineEmits(["day-click", "day-hover", "drag", "page-change", "update:modelValue"]);
+const emit = defineEmits<ICustomizableDatePickerEmits>();
 const currentCalendar = computed(() => props.currentCalendar ?? 0);
-const calendar = computed(() => props.calendars[currentCalendar.value]);
-const value = computed(() => props.modelValue);
+const calendar = computed(() => props.calendars![currentCalendar.value]);
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit("update:modelValue", value);
+  },
+});
 const monthCount = computed(() => props.monthCount ?? 1);
 
 const year = ref(calendar.value.currentYear);
 const month = ref(calendar.value.currentMonth);
+watch(calendar, cal => {
+  year.value = cal.currentYear;
+  month.value = cal.currentMonth;
+});
 const selectedFirstRange = ref<Date | null>(null);
 const currentHoveredDay = ref<Day | null>(null);
 const dateTables = computed<Page[]>(() => {
@@ -92,13 +103,13 @@ const handleOnlyPick = (day: Day) => {
     }
     val.end = newDate;
   }
-  emit("update:modelValue", value);
+  emit("update:modelValue", value.value);
 };
 </script>
 
 <template>
   <div class="customizable-date-picker-container">
-    <MainHeader @next="next" @prev="prev" />
+    <MainHeader @next="next" @prev="prev" :slot="$slots" />
     <div class="month-list">
       <MonthTable
         v-for="dateTable in dateTables"
@@ -118,7 +129,20 @@ const handleOnlyPick = (day: Day) => {
         @day-hover="onDayHover"
         @drag="onDrag"
         @input="onInput"
-      />
+      >
+        <template #month-title="{ startMonthDate }">
+          <slot name="month-title" :startMonthDate="startMonthDate"></slot>
+        </template>
+        <template #week-header>
+          <slot name="week-header"></slot>
+        </template>
+        <template #day-container="{ day }">
+          <slot name="day-container" :day="day"></slot>
+        </template>
+        <template #day="{ day }">
+          <slot name="day" :day="day"></slot>
+        </template>
+      </MonthTable>
     </div>
   </div>
 </template>

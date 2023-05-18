@@ -1,10 +1,9 @@
 <script lang="ts" setup>
+import { computed } from "vue";
 import { IWeekHeaderProps } from "./WeekHeader.interface";
 const props = defineProps<IWeekHeaderProps>();
 
-const weekDays = (): string[] => {
-  return props.calendar.weekdaysMin;
-};
+const weekDays = computed(() => props.calendar.weekdaysMin);
 </script>
 
 <template>

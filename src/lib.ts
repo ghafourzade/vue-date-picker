@@ -1,2 +1,3 @@
-// import VueComponentNpmExample from "./VueComponentNpmExample.vue";
-// export { VueComponentNpmExample };
+import CustomizableDatePicker from "@components/CustomizableDatePicker";
+import DatePicker from "@components/DatePicker";
+export { CustomizableDatePicker, DatePicker };

@@ -4,7 +4,7 @@ import CustomizableDatePicker from "@components/CustomizableDatePicker";
 
 <template>
   <CustomizableDatePicker class="date-picker blue">
-    <template #day-container="{ day }">
+    <template #day-container="{ day, daysInMonth }">
       <div
         class="day-wrapper"
         :class="{
@@ -15,6 +15,8 @@ import CustomizableDatePicker from "@components/CustomizableDatePicker";
           'end-range': day.endRange,
           'start-week': day.dayInWeek === 0,
           'end-week': day.dayInWeek === 6,
+          'start-month': day.dayInMonth === 1,
+          'end-month': day.dayInMonth === daysInMonth,
           today: day.today,
         }"
       >

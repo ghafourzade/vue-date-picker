@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { InputValue } from "@interfaces/Calendar";
-import CustomizableDatePicker from "@components/CustomizableDatePicker";
 import { gregorianCalendar, jalaliCalendar } from "@services/Calendar";
 import DatePicker from "@components/DatePicker";
 

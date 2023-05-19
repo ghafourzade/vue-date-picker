@@ -8,8 +8,14 @@ const meta: Meta<typeof DatePicker> = {
   title: "DatePicker",
   component: DatePicker,
   argTypes: {
-    currentCalendar: { control: "radio", options: [0, 1] },
-    monthCount: { control: "radio", options: [1, 2] },
+    currentCalendar: {
+      options: [0, 1],
+      control: { type: "select", labels: { 0: "Jalali Calendar", 1: "Gregorian Calendar" } },
+    },
+    range: { control: "boolean" },
+    monthCount: { control: "select", options: [1, 2] },
+    color: { control: "color" },
+    darkMode: { control: "boolean" },
   },
 };
 
@@ -28,8 +34,10 @@ export const Primary: Story = {
   }),
   args: {
     calendars: [jalaliCalendar, gregorianCalendar],
-    range: true,
     currentCalendar: 0,
+    range: true,
     monthCount: 2,
+    color: "#000000",
+    darkMode: false,
   },
 };

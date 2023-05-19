@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from "vue";
-import { Day, InputValue, Page, RangeValue } from "@/interfaces/Calendar";
-import MainHeader from "@/components/MainHeader";
-import MonthTable from "@/components/MonthTable";
+import { Day, InputValue, Page, RangeValue } from "@interfaces/Calendar";
+import MainHeader from "@components/MainHeader";
+import MonthTable from "@components/MonthTable";
 import { ICustomizableDatePickerEmits, ICustomizableDatePickerProps } from "./CustomizableDatePicker.interface";
 
 const props = defineProps<ICustomizableDatePickerProps>();
@@ -44,11 +44,11 @@ watch(value, () => {
 });
 
 const next = () => {
-  if (month.value + 1 <= 11) {
-    month.value++;
+  if (month.value - 1 >= 0) {
+    month.value--;
   } else {
-    month.value = 0;
-    year.value++;
+    month.value = 11;
+    year.value--;
   }
   emit("page-change", {
     year: year.value,
@@ -56,11 +56,11 @@ const next = () => {
   });
 };
 const prev = () => {
-  if (month.value - 1 >= 0) {
-    month.value--;
+  if (month.value + 1 <= 11) {
+    month.value++;
   } else {
-    month.value = 11;
-    year.value--;
+    month.value = 0;
+    year.value++;
   }
   emit("page-change", {
     year: year.value,
@@ -125,6 +125,7 @@ const handleOnlyPick = (day: Day) => {
         :max="props.max"
         :only-pick-day="props.range && !!props.onlyPick"
         :unequal-range="props.unequalRange"
+        :monthCount="monthCount"
         @day-click="onDayClick"
         @day-hover="onDayHover"
         @drag="onDrag"
@@ -136,8 +137,8 @@ const handleOnlyPick = (day: Day) => {
         <template #week-header>
           <slot name="week-header"></slot>
         </template>
-        <template #day-container="{ day }">
-          <slot name="day-container" :day="day"></slot>
+        <template #day-container="{ day, daysInMonth }">
+          <slot name="day-container" :day="day" :daysInMonth="daysInMonth"></slot>
         </template>
         <template #day="{ day }">
           <slot name="day" :day="day"></slot>

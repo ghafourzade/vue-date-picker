@@ -1,6 +1,9 @@
 .month-table-container {
   flex-shrink: 0;
   flex-basis: 50%;
+  &.single {
+    flex-basis: 100%;
+  }
 }
 .month-title {
   width: 100%;

@@ -2,6 +2,7 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import tsconfigPaths from "vite-tsconfig-paths";
+import rollupTsconfigPaths from "rollup-plugin-tsconfig-paths";
 
 export default defineConfig({
   plugins: [tsconfigPaths(), vue()],
@@ -12,6 +13,7 @@ export default defineConfig({
       fileName: "date-picker",
     },
     rollupOptions: {
+      plugins: [rollupTsconfigPaths()],
       external: ["vue"],
       output: {
         globals: {

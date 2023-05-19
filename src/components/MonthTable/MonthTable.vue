@@ -9,6 +9,7 @@ const emit = defineEmits(["day-click", "day-hover", "drag", "input"]);
 
 const headerTitle = computed(() => `${props.calendar.months[props.month]} ${props.year}`);
 const daysInMonth = computed(() => props.calendar.daysInMonth(props.month, props.year));
+
 const days = computed<BaseDayInfo[]>(() =>
   new Array(daysInMonth.value).fill(0).map((d, i) => ({
     dayInMonth: i + 1,
@@ -175,7 +176,7 @@ const dayClick = (day: Day) => {
 </script>
 
 <template>
-  <div class="month-table-container">
+  <div class="month-table-container" :class="{ single: props.monthCount === 1 }">
     <slot name="month-title" :startMonthDate="startMonthDate">
       <div class="month-title">{{ headerTitle }}</div>
     </slot>
@@ -188,7 +189,7 @@ const dayClick = (day: Day) => {
       </template>
       <template v-for="day in daysInMonthList" :key="day.dayInMonth">
         <div class="main-day-wrapper" @click="dayClick(day)" @mouseenter="dayHover(day)">
-          <slot name="day-container" :day="day">
+          <slot name="day-container" :day="day" :daysInMonth="daysInMonth">
             <div
               class="main-day-container"
               :class="{

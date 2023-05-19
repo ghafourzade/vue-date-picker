@@ -12,4 +12,5 @@ export interface IMonthTableProps {
   max?: Date | null;
   onlyPickDay?: boolean;
   unequalRange?: boolean;
+  monthCount?: number;
 }

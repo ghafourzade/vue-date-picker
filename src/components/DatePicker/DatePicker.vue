@@ -1,9 +1,29 @@
 <script lang="ts" setup>
 import CustomizableDatePicker from "@components/CustomizableDatePicker";
+import { ICustomizableDatePickerEmits } from "@components/CustomizableDatePicker/CustomizableDatePicker.interface";
+import { IDatePickerProps } from "./DatePicker.interface";
+import { computed } from "@vue/reactivity";
+const props = defineProps<IDatePickerProps>();
+const emit = defineEmits<ICustomizableDatePickerEmits>();
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value) {
+    emit("update:modelValue", value);
+  },
+});
 </script>
 
 <template>
-  <CustomizableDatePicker class="date-picker blue">
+  <CustomizableDatePicker
+    class="date-picker"
+    :class="{ dark: props.darkMode }"
+    :style="'--color-primaty: ' + props.color ?? '#188ef2'"
+    v-model="value"
+    v-bind="props"
+    v-on="emit"
+  >
     <template #day-container="{ day, daysInMonth }">
       <div
         class="day-wrapper"

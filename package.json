@@ -25,12 +25,11 @@
     "build-storybook": "storybook build"
   },
   "peerDependencies": {
-    "vue": "^3.2.47"
-  },
-  "dependencies": {
+    "vue": "^3.2.47",
     "dayjs": "^1.11.7",
     "jalaliday": "^2.3.0"
   },
+  "dependencies": {},
   "devDependencies": {
     "@babel/types": "^7.21.5",
     "@storybook/addon-essentials": "^7.0.12",

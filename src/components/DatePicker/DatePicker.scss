@@ -60,12 +60,16 @@ $days-raduis: 8px;
       margin: 0 $days-gap;
     }
   }
+  .day-wrapper:not(.today) {
+    .day-container {
+      border: 1px solid $color-gray-400;
+    }
+  }
   .day-container {
     position: relative;
     cursor: pointer;
     aspect-ratio: 1/1;
     width: 100%;
-    border: 1px solid $color-gray-400;
     border-radius: $days-raduis;
     transition: 200ms ease-out;
     .day {
